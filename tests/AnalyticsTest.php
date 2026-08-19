@@ -1,5 +1,6 @@
 <?php
 
+use JMac\Testing\Double;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Spatie\Analytics\Analytics;
@@ -8,7 +9,7 @@ use Spatie\Analytics\OrderBy;
 use Spatie\Analytics\Period;
 
 beforeEach(function () {
-    $this->analyticsClient = Mockery::mock(AnalyticsClient::class);
+    $this->analyticsClient = Double::for(AnalyticsClient::class);
 
     $this->propertyId = '1234567';
 
