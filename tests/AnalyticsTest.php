@@ -26,25 +26,22 @@ afterEach(fn () => Mockery::close());
 it('can fetch the visitor and page views', function () {
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['activeUsers', 'screenPageViews'],
-        ['pageTitle'],
-        10,
-        [],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect([
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['activeUsers', 'screenPageViews'],
+            ['pageTitle'],
+            10,
+            [],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect([
             [
                 'pageTitle' => 'pageTitle',
                 'activeUsers' => 1,
@@ -65,27 +62,24 @@ it('can fetch the visitor and page views', function () {
 it('can fetch the visitor and page views by date', function () {
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['activeUsers', 'screenPageViews'],
-        ['pageTitle', 'date'],
-        10,
-        [
-            OrderBy::dimension('date', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect([
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['activeUsers', 'screenPageViews'],
+            ['pageTitle', 'date'],
+            10,
+            [
+                OrderBy::dimension('date', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect([
             [
                 'pageTitle' => 'pageTitle',
                 'activeUsers' => 1,
@@ -108,27 +102,24 @@ it('can fetch the visitor and page views by date', function () {
 it('can fetch the total visitor and page views', function () {
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['activeUsers', 'screenPageViews'],
-        ['date'],
-        20,
-        [
-            OrderBy::dimension('date', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect([
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['activeUsers', 'screenPageViews'],
+            ['date'],
+            20,
+            [
+                OrderBy::dimension('date', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect([
             [
                 'date' => Carbon::createFromFormat('Ymd', '20160101'),
                 'activeUsers' => 1,
@@ -152,27 +143,24 @@ it('can fetch the most visited pages', function () {
     $maxResults = 20;
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['screenPageViews'],
-        ['pageTitle', 'fullPageUrl'],
-        $maxResults,
-        [
-            OrderBy::metric('screenPageViews', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect([
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['screenPageViews'],
+            ['pageTitle', 'fullPageUrl'],
+            $maxResults,
+            [
+                OrderBy::metric('screenPageViews', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect([
             [
                 'pageTitle' => 'Page title',
                 'fullPageUrl' => 'https://test.com',
@@ -197,27 +185,24 @@ it('can fetch the top referrers', function () {
     $maxResults = 10;
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['screenPageViews'],
-        ['pageReferrer'],
-        $maxResults,
-        [
-            OrderBy::metric('screenPageViews', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['screenPageViews'],
+            ['pageReferrer'],
+            $maxResults,
+            [
+                OrderBy::metric('screenPageViews', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(
             collect([
                 [
                     'pageReferrer' => 'https://referrer.com',
@@ -238,27 +223,24 @@ it('can fetch the top referrers', function () {
 it('can fetch the top browsers', function () {
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['screenPageViews'],
-        ['browser'],
-        3,
-        [
-            OrderBy::metric('screenPageViews', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect(
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['screenPageViews'],
+            ['browser'],
+            3,
+            [
+                OrderBy::metric('screenPageViews', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect(
             [
                 [
                     'browser' => 'Browser 1',
@@ -290,27 +272,24 @@ it('can fetch the top browsers', function () {
 it('can fetch the top countries', function () {
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['screenPageViews'],
-        ['country'],
-        3,
-        [
-            OrderBy::metric('screenPageViews', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect(
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['screenPageViews'],
+            ['country'],
+            3,
+            [
+                OrderBy::metric('screenPageViews', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect(
             [
                 [
                     'country' => 'Country 1',
@@ -342,27 +321,24 @@ it('can fetch the top countries', function () {
 it('can fetch the top operating systems', function () {
     $period = Period::create($this->startDate, $this->endDate);
 
-    $expectedArguments = [
-        $this->propertyId,
-        $period,
-        ['screenPageViews'],
-        ['operatingSystem'],
-        3,
-        [
-            OrderBy::metric('screenPageViews', true),
-        ],
-        0,
-        null,
-        false,
-        null,
-    ];
-
     $this
         ->analyticsClient
-        ->shouldReceive('get')
-        ->withArgs($expectedArguments)
-        ->once()
-        ->andReturn(collect(
+        ->expects('get')
+        ->with(
+            $this->propertyId,
+            $period,
+            ['screenPageViews'],
+            ['operatingSystem'],
+            3,
+            [
+                OrderBy::metric('screenPageViews', true),
+            ],
+            0,
+            null,
+            false,
+            null,
+        )
+        ->returns(collect(
             [
                 [
                     'operatingSystem' => 'Operating system 1',
@@ -390,10 +366,3 @@ it('can fetch the top operating systems', function () {
             ['operatingSystem' => 'Operating system 3', 'screenPageViews' => 60],
         ]);
 });
-
-function expectCarbon(Carbon $carbon)
-{
-    return Argument::satisfies(function (Carbon $argument) use ($carbon) {
-        return $argument->format('Y-m-d') === $carbon->format('Y-m-d');
-    });
-}
