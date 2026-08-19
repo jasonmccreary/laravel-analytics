@@ -32,7 +32,8 @@
         "mockery/mockery": "^1.6.12",
         "orchestra/testbench": "^10.0|^11.0",
         "pestphp/pest": "^4.1.5",
-        "spatie/ray": "^1.44.1"
+        "spatie/ray": "^1.44.1",
+        "jasonmccreary/double": "~0.6"
     },
     "autoload": {
         "psr-4": {
