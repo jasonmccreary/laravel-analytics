@@ -1,5 +1,6 @@
 <?php
 
+use JMac\Testing\Matching\Argument;
 use JMac\Testing\Double;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -392,7 +393,7 @@ it('can fetch the top operating systems', function () {
 
 function expectCarbon(Carbon $carbon)
 {
-    return Mockery::on(function (Carbon $argument) use ($carbon) {
+    return Argument::satisfies(function (Carbon $argument) use ($carbon) {
         return $argument->format('Y-m-d') === $carbon->format('Y-m-d');
     });
 }
