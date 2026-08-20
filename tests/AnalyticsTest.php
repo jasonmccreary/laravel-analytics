@@ -1,6 +1,5 @@
 <?php
 
-use JMac\Testing\Matching\Argument;
 use JMac\Testing\Double;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -20,8 +19,6 @@ beforeEach(function () {
 
     $this->endDate = Carbon::now();
 });
-
-afterEach(fn () => Mockery::close());
 
 it('can fetch the visitor and page views', function () {
     $period = Period::create($this->startDate, $this->endDate);
